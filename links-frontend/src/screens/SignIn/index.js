@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signIn } from './SignInActions';
+import React from 'react'
+import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { signIn } from '../../actions/AccountActions'
 
 const SignIn = (props) => {
-  const { signIn, account } = props;
+  const { signIn, account } = props
 
   if(account) {
     return <Redirect to='/manage/links' />
@@ -17,7 +17,7 @@ const SignIn = (props) => {
     const data = Object.fromEntries(formData)
 
     signIn(data)
-  };
+  }
 
   return(
     <div className="container h-100 pt-5">
@@ -43,12 +43,12 @@ const SignIn = (props) => {
       </div>
     </div>
   )
-};
+}
 
 const mapStateToProps = (state) => {
   return {
-    account: state.signIn.account
-  };
-};
+    account: state.account.account
+  }
+}
 
 export default connect(mapStateToProps, { signIn })(SignIn);
