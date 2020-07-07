@@ -23,3 +23,13 @@ export const apiPost = (path, data = {}) => {
 
     return axios.post(url, data, options)
 }
+
+export const apiGet = (path, params = {}) => {
+
+    const url = getApiUrl(path)
+    const options = {
+        headers: getHeaders()
+    }
+
+    return axios.get(url, options)
+}
