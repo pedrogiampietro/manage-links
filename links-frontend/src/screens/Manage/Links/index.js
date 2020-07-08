@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import Layout from '../../Layouts/Manage'
-import { linkList } from '../../../actions/LinkActions'
+import { linkList, setLinkToRemove } from '../../../actions/LinkActions'
 
-const Links = ({ links, linkList }) => {
+const Links = ({ links, linkToRemove, linkList, setLinkToRemove }) => {
 
     useEffect(() => {
         linkList()
@@ -25,8 +25,16 @@ const Links = ({ links, linkList }) => {
 
             {links && links.length 
             ? links.map((link) => {
+
+            const deleteClick = (e) => setLinkToRemove(link)
+            
+            const border = ( linkToRemove && linkToRemove.id === link.id )
+             ? 'border border-danger rounded' 
+             : 'border border-transparent'
+
+
             return (
-            <div key={link.id} className="pb-2 pt-2 p1-3 pr-3 d-flex flex-row justify-content-between">
+            <div key={link.id} className={`pb-2 pt-2 p1-3 pr-3 d-flex flex-row justify-content-between ${border}`}>
                 <div className="pr-3">
                     <img src="https://via.placeholder.com/100" alt="Link Icon"/>
                 </div>
@@ -35,10 +43,8 @@ const Links = ({ links, linkList }) => {
                     <span className="text-primary clearfix">{link.url}</span>
                 </div>
                 <div className="ml-auto p-2 clearfix">
-                    <Link to={`/manage/links/edit/${link.id}`}>
-                    Edit
-                    </Link>
-                    <span>Delete</span>
+                    <Link to={`/manage/links/edit/${link.id}`}>Edit</Link>
+                    <button className="btn btn-clear" onClick={deleteClick}>Delete</button>
                 </div>
             </div>
                 )
@@ -50,8 +56,11 @@ const Links = ({ links, linkList }) => {
 }
 
 const MapStateToProps = (state) => {
-    return { links: state.link.links }
+    return { 
+        links: state.link.links, 
+        linkToRemove: state.link.linkToRemove
+    }
 }
 
 
-export default connect(MapStateToProps, { linkList })(Links)
+export default connect(MapStateToProps, { linkList, setLinkToRemove })(Links)
