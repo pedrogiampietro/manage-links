@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../../../Layouts/Manage'
+import FormGroup from '../../../../components/FormGroup'
+import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { linkGet } from '../../../../actions/LinkActions'
 
-const Edit = () => {
+const Edit = ({ link, linkGet }) => {
+
+    const { id } = useParams()
+
+    useEffect(() => {
+        linkGet(id)
+    }, [id, linkGet])
+
+
     return (
         <Layout>
             <h1>Edit Link</h1>
         <div>
                 <form>
-                    <div className="form-group">
-                        <label>Label</label>
-                        <input type="text" className="form-control" />
-                    </div>
+                <FormGroup label="label" name="label" data={link} type="text" />
                     <div className="form-group">
                         <label>Url</label>
-                        <input type="text" className="form-control" />
+                        <input type="text" className="form-control" value={link && link.url}/>
                     </div>
                     <div className="form-group form-check">
                         <label className="form-check-label">
@@ -31,5 +40,10 @@ const Edit = () => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return { 
+        link: state.link.link
+    }
+}
 
-export default Edit
+export default connect(mapStateToProps, { linkGet })(Edit)
