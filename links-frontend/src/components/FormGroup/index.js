@@ -14,11 +14,18 @@ const FormGroup = (props) => {
         setValue(e.target.value)
     }
 
+    const inputProps = {
+        type,
+        name,
+        value: value || '',
+        onChange: handleChange,
+    }
+
     return (
 
         <div className="form-group">
             <label>{label}</label>
-            <input type={type} className="form-control" name={name} value={value} onChange={handleChange}/>
+            <input className="form-control" {...inputProps }/>
         </div>
 
     )

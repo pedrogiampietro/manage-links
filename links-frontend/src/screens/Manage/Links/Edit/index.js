@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { linkGet } from '../../../../actions/LinkActions'
 import Layout from '../../../Layouts/Manage'
 import FormGroup from '../../../../components/FormGroup'
-import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { linkGet } from '../../../../actions/LinkActions'
+import FormCheck from '../../../../components/FormCheck'
+
 
 const Edit = ({ link, linkGet }) => {
 
@@ -13,24 +15,16 @@ const Edit = ({ link, linkGet }) => {
         linkGet(id)
     }, [id, linkGet])
 
-
     return (
         <Layout>
             <h1>Edit Link</h1>
         <div>
                 <form>
+
                 <FormGroup label="label" name="label" data={link} type="text" />
-                    <div className="form-group">
-                        <label>Url</label>
-                        <input type="text" className="form-control" value={link && link.url}/>
-                    </div>
-                    <div className="form-group form-check">
-                        <label className="form-check-label">
-                            <input type="checkbox" name="isSocial" />
-                            <span className="form-check-sign"></span>
-                            Is Social
-                        </label>
-                    </div>
+                <FormGroup label="Url" name="url" data={link} type="text" />
+                <FormCheck label="Is Social" name="isSocial" data={link} />
+         
                     <div>
                         <button className="btn btn-primary btn-round">Submit</button>
                     </div>
